@@ -12,21 +12,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/second_update")
-public class ControllerSecondPageUpdate extends HttpServlet {
+@WebServlet("/work_with_data")
+public class ControllerCreatUpdate extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = new User();
         Service service = new ServiceImpl();
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
         user.setGender(req.getParameter("gender"));
         user.setPassword(req.getParameter("password"));
-        if(service.update(user,user.getId())){
-            resp.getWriter().write("User was update");
-        }else {
-            resp.getWriter().write("Something bad");
+
+        if (req.getParameter("flag").equals("creat")) {
+            if (service.creat(user)) {
+                resp.getWriter().write("Welcome to the our site");
+            } else {
+                resp.getWriter().write("Something bad");
+            }
+        } else if (req.getParameter("flag").equals("update")) {
+            if (service.update(user, user.getId())) {
+                resp.getWriter().write("User was update");
+            } else {
+                resp.getWriter().write("Something bad");
+            }
         }
     }
 }

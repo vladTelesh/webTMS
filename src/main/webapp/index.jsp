@@ -15,7 +15,7 @@
 <%@include file="menu.html"%>
 <div class="form-style-10">
     <h1>Sign Up Now!<span>Sign up and use the demo site!</span></h1>
-    <form action="/info" method="post">
+    <form action="/work_with_data" method="post">
         <div class="section"><span>1</span>First Name </div>
         <div class="inner-wrap">
             <label>Your Full Name <input type="text" name="name" /></label>
@@ -34,6 +34,7 @@
         <div class="inner-wrap">
             <label>Password <input type="password" name="password" /></label>
             <label>Confirm Password <input type="password" name="field6" /></label>
+            <input type="hidden" name="flag" value="creat">
         </div>
         <div class="button-section">
             <input type="submit" name="Sign Up" />

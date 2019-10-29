@@ -16,7 +16,7 @@
 <%@include file="menu.html"%>
 <div class="form-style-10">
     <h1>Update!<span>Update user from system!</span></h1>
-    <form action="/second_update" method="post">
+    <form action="/work_with_data" method="post">
         <div class="section"><span>1</span>First Name </div>
         <div class="inner-wrap">
             <label>Your Full Name <input type="text" name="name" value="<%=user.getName()%>" /></label>
@@ -35,6 +35,7 @@
         <div class="inner-wrap">
             <label>Password <input type="password" name="password" value="<%=user.getPassword()%>" /></label>
             <label>Confirm Password <input type="password" name="field6" /></label>
+            <input type="hidden" name="flag" value="update">
         </div>
         <div class="button-section">
             <input type="submit" name="Sign Up" />

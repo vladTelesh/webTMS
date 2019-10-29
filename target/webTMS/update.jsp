@@ -19,6 +19,7 @@
         <div class="section"><span>1</span>User's Id</div>
         <div class="inner-wrap">
             <label>Enter user's id <input type="number" name="id"/></label>
+            <input type="hidden" name="flag" value="update">
         </div>
         <div class="button-section">
             <input type="submit" name="Sign Up"/>

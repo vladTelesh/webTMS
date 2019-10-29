@@ -34,6 +34,7 @@
         <div class="inner-wrap">
             <label>Password <input type="password" name="password" /></label>
             <label>Confirm Password <input type="password" name="field6" /></label>
+            <input type="hidden" name="flag" value="creat">
         </div>
         <div class="button-section">
             <input type="submit" name="Sign Up" />
