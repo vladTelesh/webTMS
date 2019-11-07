@@ -15,10 +15,11 @@
 <%@include file="menu.html" %>
 <div class="form-style-10">
     <h1>Delete!<span>delete user from system!</span></h1>
-    <form action="/delete" method="post">
+    <form action="/manipulation_data" method="post">
         <div class="section"><span>1</span>User's Id</div>
         <div class="inner-wrap">
             <label>Enter user's id <input type="number" name="id"/></label>
+            <input type="hidden" name="flag" value="delete">
         </div>
         <div class="button-section">
             <input type="submit" name="Sign Up"/>

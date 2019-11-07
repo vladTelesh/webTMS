@@ -9,8 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/work_with_data")
 public class ControllerCreatUpdate extends HttpServlet {
@@ -18,6 +18,7 @@ public class ControllerCreatUpdate extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User();
         Service service = new ServiceImpl();
+        PrintWriter writer = resp.getWriter();
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
         user.setGender(req.getParameter("gender"));
@@ -25,16 +26,17 @@ public class ControllerCreatUpdate extends HttpServlet {
 
         if (req.getParameter("flag").equals("creat")) {
             if (service.creat(user)) {
-                resp.getWriter().write("Welcome to the our site");
+                resp.getWriter().write("<h1>Welcome to the our site</h1>");
             } else {
-                resp.getWriter().write("Something bad");
+                resp.getWriter().write("<h1>Something bad</h1>");
             }
         } else if (req.getParameter("flag").equals("update")) {
             if (service.update(user, user.getId())) {
-                resp.getWriter().write("User was update");
+                resp.getWriter().write("<h1>User was update</h1>");
             } else {
-                resp.getWriter().write("Something bad");
+                resp.getWriter().write("<h1>Something bad</h1>");
             }
         }
+        writer.print("<input value=\"Return\" type=\"button\" onclick=\"location.href='index.jsp'\"/>");
     }
 }

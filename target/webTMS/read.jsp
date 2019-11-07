@@ -15,10 +15,11 @@
 <%@include file="menu.html" %>
 <div class="form-style-10">
     <h1>Read!<span>find up info about users!</span></h1>
-    <form action="/information" method="post">
+    <form action="/manipulation_data" method="post">
         <div class="section"><span>1</span>User's Id</div>
         <div class="inner-wrap">
             <label>Enter user's id <input type="number" name="id"/></label>
+            <input type="hidden" name="flag" value="read">
         </div>
         <div class="button-section">
             <input type="submit" name="Sign Up"/>

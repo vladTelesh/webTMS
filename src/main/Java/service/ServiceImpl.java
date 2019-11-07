@@ -18,30 +18,20 @@ public class ServiceImpl implements Service {
     @Override
     public boolean creat(User user) {
         dao = new DAOImpl();
-        if(dao.creat(user)){
-            return true;
-        }else {
-            return false;
-        }
+        return dao.creat(user);
+
     }
 
     @Override
     public boolean delete(long id) {
         dao = new DAOImpl();
-        if(dao.delete(id)){
-            return true;
-        }else {
-            return false;
-        }
+        return dao.delete(id);
+
     }
 
     @Override
     public boolean update(User user, long id) {
         dao = new DAOImpl();
-        if(dao.update(user,id)){
-            return true;
-        }else {
-            return false;
-        }
+        return   dao.update(user,id);
     }
 }
