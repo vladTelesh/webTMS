@@ -20,23 +20,22 @@ public class ControllerReadUpdateDelete extends HttpServlet {
         Service service = new ServiceImpl();
         long id = Long.parseLong(req.getParameter("id"));
         PrintWriter writer = resp.getWriter();
+        User user = service.getUserById(id);
 
         if (req.getParameter("flag").equals("read")) {
-            User user = service.getUserById(id);
-            req.setAttribute("user",user);
+            req.setAttribute("user", user);
             String path = "/read.jsp";
             getServletContext().getRequestDispatcher(path).forward(req, resp);
 
-        }else if (req.getParameter("flag").equals("update")) {
-            User user = service.getUserById(id);
+        } else if (req.getParameter("flag").equals("update")) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             resp.sendRedirect("/second_page_update.jsp");
 
-        }else if (req.getParameter("flag").equals("delete")) {
-            if(service.delete(id)){
+        } else if (req.getParameter("flag").equals("delete")) {
+            if (service.delete(user)) {
                 resp.getWriter().write("<h1>User was delete</h1>");
-            }else {
+            } else {
                 resp.getWriter().write("<h1>Something bad</h1>");
             }
             writer.print("<input value=\"Return\" type=\"button\" onclick=\"location.href='index.jsp'\"/>");

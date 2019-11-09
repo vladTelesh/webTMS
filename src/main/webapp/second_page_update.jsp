@@ -36,6 +36,7 @@
             <label>Password <input type="password" name="password" required value="<%=user.getPassword()%>" /></label>
             <label>Confirm Password <input type="password" required name="field6" /></label>
             <input type="hidden" name="flag" value="update">
+            <input type="hidden" name="id" value="<%=user.getId()%>">
         </div>
         <div class="button-section">
             <input type="submit" name="Sign Up" />

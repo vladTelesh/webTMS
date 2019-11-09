@@ -1,108 +1,89 @@
 package dataBase;
 
 
-
 import domain.User;
-
-import java.lang.reflect.InvocationTargetException;
-import java.sql.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
+import java.util.List;
 
 
 public class DAOImpl implements DAO {
-    private String url = "jdbc:mysql://127.0.0.1:3306/tms?serverTimezone=Europe/Moscow&AllowPublicKeyRetrieval=True&useSSL=false";
-    private String username = "root";
-    private String password = "vlad";
-    private Connection conn;
-    public DAOImpl() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            conn = DriverManager.getConnection(url, username, this.password);
-            System.out.println("Success!!!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+    private Transaction transaction = null;
 
     public User getUserById(long userId) {
-        String sql = "SELECT Id, Name,Email,Password,Gender FROM user WHERE Id = ?";
-        User user = new User();
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setLong(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                user.setId(resultSet.getLong("Id"));
-                user.setName(resultSet.getString("Name"));
-                user.setEmail(resultSet.getString("Email"));
-                user.setPassword(resultSet.getString("Password"));
-                user.setGender(resultSet.getString("Gender"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        User user = null;
+     try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+         user = session.get(User.class,userId);
+     }catch (Exception e) {
+         if (transaction != null) {
+             transaction.rollback();
+         }
+         e.printStackTrace();
 
+     }
         return user;
     }
 
     @Override
     public boolean creat(User user) {
-        String sql = "INSERT INTO user (Name, Email, Password, Gender) VALUE (?,?,?,?)";
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setString(4, user.getGender());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // save the user object
+            session.save(user);
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
             return false;
         }
-
-       return true;
-    }
-
-    @Override
-    public boolean delete(long id) {
-        String sql = "DELETE FROM user WHERE id = ?";
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
         return true;
     }
 
     @Override
-    public boolean update(User user,long id) {
-        String sql = "UPDATE user SET Name = ?,Email = ?, Password = ?, Gender = ? WHERE id = ?";
-        try {
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setString(4, user.getGender());
-            preparedStatement.setLong(5, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+    public boolean delete(User user) {
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            transaction = session.beginTransaction();
+            session.delete(user);
+            transaction.commit();
+
+        }catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
             return false;
         }
-
         return true;
     }
+
+    @Override
+    public boolean update(User user) {
+       try(Session session = HibernateUtil.getSessionFactory().openSession()){
+           transaction = session.beginTransaction();
+           session.update(user);
+           transaction.commit();
+
+       }catch (Exception e) {
+           if (transaction != null) {
+               transaction.rollback();
+           }
+           e.printStackTrace();
+           return false;
+       }
+        return true;
+    }
+
+    //test method
+    public List<User> getAllUsers() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return (List<User>) session.createQuery("from domain.User ").list();
+        }
+
+    }
+
 }

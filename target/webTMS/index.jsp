@@ -18,12 +18,12 @@
     <form action="/work_with_data" method="post">
         <div class="section"><span>1</span>First Name </div>
         <div class="inner-wrap">
-            <label>Your Full Name <input type="text" name="name" /></label>
+            <label>Your Full Name <input type="text"  required pattern=^[A-Z]{1}[a-z]+$ placeholder="Only english letters" name="name" /></label>
         </div>
 
         <div class="section"><span>2</span>Email & Gender</div>
         <div class="inner-wrap">
-            <label>Email Address <input type="email" name="email" /></label>
+            <label>Email Address <input type="email" name="email" required placeholder="XXX@XXX.XX" /></label>
             <label>Gender <select name="gender">
                 <option>Male</option>
                 <option>Female</option>
@@ -32,8 +32,8 @@
 
         <div class="section"><span>3</span>Passwords</div>
         <div class="inner-wrap">
-            <label>Password <input type="password" name="password" /></label>
-            <label>Confirm Password <input type="password" name="field6" /></label>
+            <label>Password <input type="password" required name="password" /></label>
+            <label>Confirm Password <input type="password"  required name="field6" /></label>
             <input type="hidden" name="flag" value="creat">
         </div>
         <div class="button-section">

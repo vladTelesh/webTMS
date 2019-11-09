@@ -23,15 +23,15 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public boolean delete(long id) {
+    public boolean delete(User user) {
         dao = new DAOImpl();
-        return dao.delete(id);
+        return dao.delete(user);
 
     }
 
     @Override
-    public boolean update(User user, long id) {
+    public boolean update(User user) {
         dao = new DAOImpl();
-        return   dao.update(user,id);
+        return   dao.update(user);
     }
 }

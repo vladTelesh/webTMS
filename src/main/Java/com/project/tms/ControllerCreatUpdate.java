@@ -19,6 +19,7 @@ public class ControllerCreatUpdate extends HttpServlet {
         User user = new User();
         Service service = new ServiceImpl();
         PrintWriter writer = resp.getWriter();
+
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
         user.setGender(req.getParameter("gender"));
@@ -31,7 +32,8 @@ public class ControllerCreatUpdate extends HttpServlet {
                 resp.getWriter().write("<h1>Something bad</h1>");
             }
         } else if (req.getParameter("flag").equals("update")) {
-            if (service.update(user, user.getId())) {
+            user.setId(Long.parseLong(req.getParameter("id")));
+            if (service.update(user)) {
                 resp.getWriter().write("<h1>User was update</h1>");
             } else {
                 resp.getWriter().write("<h1>Something bad</h1>");

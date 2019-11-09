@@ -1,12 +1,23 @@
 package domain;
 
+
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private long id;
+    @Column(name = "Name")
     private String name;
+    @Column(name = "Email")
     private String email;
+    @Column(name = "Gender")
     private String gender;
+    @Column(name = "Password")
     private String password;
 
     public long getId() {
