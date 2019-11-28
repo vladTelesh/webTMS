@@ -1,11 +1,9 @@
 package dataBase;
 
 
-import domain.User;
-
-public interface DAO {
-    User getUserById(long userId);
-    boolean creat(User user);
-    boolean delete(User user);
-    boolean update(User user);
+public interface DAO<T> {
+    T getUserById(Class<T> type,int userId);
+    boolean creat(T entity);
+    boolean delete(T entity);
+    boolean update(T entity);
 }

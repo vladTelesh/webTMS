@@ -1,11 +1,10 @@
 package service;
 
-import domain.User;
 
 
-public interface Service {
-    User getUserById(long userId);
-    boolean creat(User user);
-    boolean delete(User user);
-    boolean update(User user);
+public interface Service<T> {
+    T getUserById(Class<T> type,int userId);
+    boolean creat(T entity);
+    boolean delete(T entity);
+    boolean update(T entity);
 }

@@ -1,7 +1,7 @@
 package util;
 
 
-import domain.User;
+import domain.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -27,7 +27,10 @@ public class HibernateUtil {
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 configuration.setProperties(settings);
-                configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(UserInfo.class);
+                configuration.addAnnotatedClass(Login.class);
+                configuration.addAnnotatedClass(LastJob.class);
+                configuration.addAnnotatedClass(Role.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);

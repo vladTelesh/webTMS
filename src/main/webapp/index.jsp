@@ -15,10 +15,18 @@
 <%@include file="menu.html"%>
 <div class="form-style-10">
     <h1>Sign Up Now!<span>Sign up and use the demo site!</span></h1>
-    <form action="/work_with_data" method="post">
+    <form action="/work-with-data" method="post">
         <div class="section"><span>1</span>First Name </div>
         <div class="inner-wrap">
             <label>Your Full Name <input type="text"  required pattern=^[A-Z]{1}[a-z]+$ placeholder="Only english letters" name="name" /></label>
+            <label>Your Full SecondName <input type="text"  required pattern=^[A-Z]{1}[a-z]+$ placeholder="Only english letters" name="second_name" /></label>
+            <label>Role <select name="role">
+                <option>admin</option>
+                <option>user</option>
+                <option>worker</option>
+                <option>team lead</option>
+                <option>tester</option>
+            </select> </label>
         </div>
 
         <div class="section"><span>2</span>Email & Gender</div>
